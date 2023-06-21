@@ -20,7 +20,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class Person extends AbstractEntity {
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     @Column(name="name", length = 100)
     private String name;
@@ -34,13 +34,13 @@ public class Person extends AbstractEntity {
     @Column(name = "age")
     private int age;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
     @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
     @Column(name="identification_number", length = 10)
     private String identificationNumber;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     @Column(name = "address", length = 255)
     private String address;

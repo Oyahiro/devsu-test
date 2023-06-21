@@ -17,26 +17,26 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UpdateClientRequestDTO {
 
-    @NotNull
+    @NotNull(message = "Value is required")
     private UUID clientId;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Value is required")
     private Gender gender;
 
     @Min(value = 0, message = "The value cannot be less than 0")
     @Max(value = 150, message = "The value cannot be greater than 0")
     private int age;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
     @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
     private String identificationNumber;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     private String address;
 
@@ -44,10 +44,10 @@ public class UpdateClientRequestDTO {
     @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
     private String phoneNumber;
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     private String password;
 
-    @NotNull
+    @NotNull(message = "Value is required")
     private Status status;
 
 }

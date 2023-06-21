@@ -1,10 +1,10 @@
 package org.devsu.controller;
 
-import org.devsu.dto.requests.CreateClientRequestDTO;
-import org.devsu.dto.requests.UpdateClientRequestDTO;
-import org.devsu.dto.responses.ClientResponseDTO;
 import org.devsu.dto.ErrorResponseDTO;
-import org.devsu.service.ClientService;
+import org.devsu.dto.requests.CreateAccountRequestDTO;
+import org.devsu.dto.requests.UpdateAccountRequestDTO;
+import org.devsu.dto.responses.AccountResponseDTO;
+import org.devsu.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +13,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-import static org.devsu.common.Constants.URI_CLIENTS;
+import static org.devsu.common.Constants.URI_ACCOUNTS;
 
 @RestController
-@RequestMapping(value = {URI_CLIENTS})
-public class ClientController {
+@RequestMapping(value = {URI_ACCOUNTS})
+public class AccountController {
 
-    private final Logger LOG = LoggerFactory.getLogger(ClientController.class);
+    private final Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
-    private final ClientService clientService;
+    private final AccountService accountService;
 
     @Autowired
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @GetMapping("")
-    public ResponseEntity<?> read(@RequestParam UUID clientId) {
+    public ResponseEntity<?> read(@RequestParam String accountNumber) {
         try {
-            ClientResponseDTO clientResponse = clientService.read(clientId);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            AccountResponseDTO accountResponse = accountService.read(accountNumber);
+            return new ResponseEntity<>(accountResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -48,10 +46,10 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody CreateClientRequestDTO client) {
+    public ResponseEntity<?> create(@Valid @RequestBody CreateAccountRequestDTO account) {
         try {
-            ClientResponseDTO clientResponse = clientService.create(client);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            AccountResponseDTO accountResponse = accountService.create(account);
+            return new ResponseEntity<>(accountResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -62,11 +60,11 @@ public class ClientController {
         }
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> update(@Valid @RequestBody UpdateClientRequestDTO client) {
+    @PatchMapping("")
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateAccountRequestDTO account) {
         try {
-            ClientResponseDTO clientResponse = clientService.update(client);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            AccountResponseDTO accountResponse = accountService.update(account);
+            return new ResponseEntity<>(accountResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -78,9 +76,9 @@ public class ClientController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> delete(@RequestParam UUID clientId) {
+    public ResponseEntity<?> delete(@RequestParam String accountNumber) {
         try {
-            clientService.delete(clientId);
+            accountService.delete(accountNumber);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());

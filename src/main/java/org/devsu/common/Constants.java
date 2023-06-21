@@ -17,4 +17,9 @@ public class Constants {
     public static final String CURRENT_USER = "CURRENT_USER";
     public static final String CURRENT_USERNAME = "CURRENT_USERNAME";
     public static final String ROLES = "ROLES";
+
+    // OTHER CONSTANTS
+
+
+
 }

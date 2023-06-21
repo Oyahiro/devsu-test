@@ -1,6 +1,6 @@
 package org.devsu.service;
 
-import org.devsu.dto.requests.SaveClientRequestDTO;
+import org.devsu.dto.requests.CreateClientRequestDTO;
 import org.devsu.dto.requests.UpdateClientRequestDTO;
 import org.devsu.dto.responses.ClientResponseDTO;
 import org.devsu.entity.Client;
@@ -33,18 +33,18 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public ClientResponseDTO get(UUID clientId) throws Exception {
+    public ClientResponseDTO read(UUID clientId) throws Exception {
         Optional<Client> optionalClient = clientRepository.findById(clientId);
         if (optionalClient.isEmpty()) {
             LOG.error(String.format("The client with id %s does not exist", clientId));
-            throw new Exception("The record to be modified was not found");
+            throw new Exception("Record not found");
         }
 
         return new ClientResponseDTO(optionalClient.get());
     }
 
     @Override
-    public ClientResponseDTO save(SaveClientRequestDTO client) throws Exception {
+    public ClientResponseDTO create(CreateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
         Optional<Person> optionalPerson = personRepository.findByIdentificationNumber(client.getIdentificationNumber());
         if (optionalPerson.isPresent()) {

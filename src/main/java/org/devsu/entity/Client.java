@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -18,7 +20,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class Client extends AbstractEntity {
 
-    @NotEmpty
+        @NotEmpty(message = "Cannot be empty")
     @Column(name = "password", length = 50)
     private String password;
 
@@ -30,5 +32,15 @@ public class Client extends AbstractEntity {
     @JoinColumn(name="person_id", referencedColumnName="id")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Person person;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Account> accounts;
+
+    public String getName() {
+        if (Objects.nonNull(person)) {
+            return person.getName();
+        }
+        return "";
+    }
 
 }

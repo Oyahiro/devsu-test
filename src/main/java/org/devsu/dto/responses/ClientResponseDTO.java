@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.devsu.entity.Client;
-import org.devsu.entity.Person;
 import org.devsu.enums.Gender;
 import org.devsu.enums.Status;
 
@@ -21,11 +20,13 @@ public class ClientResponseDTO {
     private String identificationNumber;
     private String address;
     private String phoneNumber;
+    private String password;
     private Status status;
 
     public ClientResponseDTO(Client client) {
+        this.password = client.getPassword();
         this.status = client.getStatus();
-        
+
         if(Objects.nonNull(client.getPerson())) {
             this.name = client.getPerson().getName();
             this.gender = client.getPerson().getGender();

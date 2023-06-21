@@ -26,11 +26,11 @@ public class Movement extends AbstractEntity {
     @Column(name="movement_type", length = 15)
     private MovementType movementType;
 
-    @Min(0)
+    @Min(value = 0, message = "The value cannot be negative.")
     @Column(name = "value")
     private double value;
 
-    @Min(0)
+    @Min(value = 0, message = "The balance cannot be negative.")
     @Column(name = "balance")
     private double balance;
 
