@@ -199,4 +199,42 @@ public class MovementServiceTest {
 
         verify(movementRepository, times(0)).saveAll(any());
     }
+
+    @Test
+    void createShouldThrowExceptionWhenAccountDoesNotExist() {
+        CreateMovementRequestDTO request = new CreateMovementRequestDTO();
+        request.setAccountNumber("nonExistingAccountNumber");
+
+        when(accountRepository.findByAccountNumber(request.getAccountNumber())).thenReturn(Optional.empty());
+
+        assertThrows(Exceptions.AccountNotFoundException.class, () ->
+                movementService.create(request));
+    }
+
+    @Test
+    public void testCreateMovementThrowsExceedsDailyWithdrawalLimitException() throws Exception {
+        // arrange
+        String accountNumber = "123456";
+        double withdrawalAmount = 210.0;
+        double todayTotal = 800.0;
+
+        Account account = new Account();
+        account.setAccountNumber(accountNumber);
+
+        CreateMovementRequestDTO movementDTO = new CreateMovementRequestDTO();
+        movementDTO.setAccountNumber(accountNumber);
+        movementDTO.setMovementType(MovementType.WITHDRAWAL);
+        movementDTO.setValue(withdrawalAmount);
+
+        when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
+        when(movementRepository.findTotalValueByMovementTypeAndAccountNumberForToday(accountNumber, MovementType.WITHDRAWAL))
+                .thenReturn(todayTotal);
+
+        // assert
+        assertThrows(Exceptions.ExceedsDailyWithdrawalLimitException.class, () -> {
+            // act
+            movementService.create(movementDTO);
+        });
+    }
+
 }

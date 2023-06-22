@@ -1,0 +1,2379 @@
+{
+	"info": {
+		"_postman_id": "618dd2ad-ff60-4cf1-878d-31c9f55b3272",
+		"name": "Devsu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25237309"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Save client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Christian Chunga\",\r\n    \"gender\": \"MALE\", // MALE, FEMALE, NOT_SPECIFIED\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/clients",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"clients"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save client",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Christian Chunga\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 07:16:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"clientId\": \"c22ff510-3072-4707-b18a-55452de72bb3\",\n    \"name\": \"Christian Chunga\",\n    \"gender\": \"MALE\",\n    \"age\": 24,\n    \"identificationNumber\": \"0941106445\",\n    \"address\": \"Juan Montalvo\",\n    \"phoneNumber\": \"0963179218\",\n    \"password\": \"0941106445\",\n    \"status\": \"ACTIVE\"\n}"
+						},
+						{
+							"name": "[ERROR] Client already registered",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Christian Chunga\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 07:16:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"There is already a client registered with this identification number\",\n    \"timestamp\": \"2023-06-21T20:23:45.8297069\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Identification number is not valid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Christian Chunga\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941406445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 07:17:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Identification number is not valid\",\n    \"timestamp\": \"2023-06-21T20:23:54.6621385\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Christian Chung 2a\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"094106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:17:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T20:24:02.7720948\",\n    \"details\": {\n        \"identificationNumber\": \"This field only accepts numeric values\",\n        \"name\": \"This field only accepts letters\"\n    }\n}"
+						},
+						{
+							"name": "[ERROR] Body json parse error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Christian Chunga\",\r\n    \"gender\": \"\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:28:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid data format\",\n    \"timestamp\": \"2023-06-21T20:24:08.5045525\",\n    \"details\": {\n        \"error\": \"The provided data could not be understood. Please check your input and try again.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"clients"
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get client",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:37:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"clientId\": \"11e4026b-f88b-48da-b7d7-e9c75fa127a4\",\n    \"name\": \"Christian Chunga\",\n    \"gender\": \"MALE\",\n    \"age\": 24,\n    \"identificationNumber\": \"0941106445\",\n    \"address\": \"Juan Montalvo\",\n    \"phoneNumber\": \"0963179218\",\n    \"password\": \"0941106445\",\n    \"status\": \"ACTIVE\"\n}"
+						},
+						{
+							"name": "[ERROR] Client not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 20:53:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:30:20.2343713\",\n    \"details\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update client",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientId\": \"d6706c0d-d6f8-4b63-abe4-b10b0caaf39a\",\r\n    \"name\": \"Christian Chunga Z\",\r\n    \"gender\": \"MALE\", // MALE, FEMALE, NOT_SPECIFIED\r\n    \"age\": 22,\r\n    \"identificationNumber\": \"0941106452\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"DELETED\" // ACTIVE, DISABLED, DELETED\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/clients",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"clients"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update client",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"clientId\": \"d6706c0d-d6f8-4b63-abe4-b10b0caaf39a\",\r\n    \"name\": \"Christian Chunga Z\",\r\n    \"gender\": \"MALE\", // MALE, FEMALE, NOT_SPECIFIED\r\n    \"age\": 22,\r\n    \"identificationNumber\": \"091106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"093179218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"DELETED\" // ACTIVE, DISABLED, DELETED\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:12:53 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"clientId\": \"d6706c0d-d6f8-4b63-abe4-b10b0caaf39a\",\n    \"name\": \"Christian Chunga Z\",\n    \"gender\": \"MALE\",\n    \"age\": 22,\n    \"identificationNumber\": \"0941106452\",\n    \"address\": \"Juan Montalvo\",\n    \"phoneNumber\": \"0963179218\",\n    \"password\": \"00000000000\",\n    \"status\": \"DELETED\"\n}"
+						},
+						{
+							"name": "[ERROR] Identification number is not valid",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"clientId\": \"c7674f49-0bc1-4240-8f25-fef9ff7c99f5\",\r\n    \"name\": \"Christian Chunga Z\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941150615\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"DELETED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:14:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Identification number is not valid\",\n    \"timestamp\": \"2023-06-21T20:35:58.6658685\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] ClientId not found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"clientId\": \"8194164f-580f-4abd-8e9b-78a68f101ba4\",\r\n    \"name\": \"Christian Chunga Z\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"0941106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"0963179218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"DELETED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:12:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:36:06.1542157\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"clientId\": \"c7674f49-0bc1-4240-8f25-fef9ff7c99f5\",\r\n    \"name\": \"Christian Chunga 2Z\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"091106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"093179218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"DELETED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:18:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T20:36:12.673924\",\n    \"details\": {\n        \"identificationNumber\": \"This field only accepts numeric values\",\n        \"name\": \"This field only accepts letters\",\n        \"phoneNumber\": \"This field only accepts numeric values\"\n    }\n}"
+						},
+						{
+							"name": "[ERROR] Body json parse error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"clientId\": \"c7674f49-0bc1-4240-8f25-fef9ff7c99f5\",\r\n    \"name\": \"Christian Chunga Z\",\r\n    \"gender\": \"MALE\",\r\n    \"age\": 24,\r\n    \"identificationNumber\": \"091106445\",\r\n    \"address\": \"Juan Montalvo\",\r\n    \"phoneNumber\": \"09379218\",\r\n    \"password\": \"00000000000\",\r\n    \"status\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 18:26:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid data format\",\n    \"timestamp\": \"2023-06-21T20:36:18.4658262\",\n    \"details\": {\n        \"error\": \"The provided data could not be understood. Please check your input and try again.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete client",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"clients"
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete client",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 19:37:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[ERROR] Client not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/clients?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 19:37:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:37:22.1373081\",\n    \"details\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"00003\",\r\n    \"accountType\": \"SAVINGS\", // SAVINGS, CHECKING\r\n    \"initialBalance\": 100,\r\n    \"clientId\": \"2fc28709-b2ef-44c3-93bb-28f2c5ee7be5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/accounts",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"00001\",\r\n    \"accountType\": \"SAVINGS\", // SAVINGS, CHECKING\r\n    \"initialBalance\": 100,\r\n    \"clientId\": \"2fc28709-b2ef-44c3-93bb-28f2c5ee7be5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:32:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accountNumber\": \"00001\",\n    \"accountType\": \"SAVINGS\",\n    \"initialBalance\": 100.0,\n    \"status\": \"ACTIVE\",\n    \"client\": \"Christian Chunga\"\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": -1,\r\n    \"clientId\": \"13606a7b-cc4f-4836-b28b-8e6176b76d81\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:25:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T20:43:15.1688984\",\n    \"details\": {\n        \"initialBalance\": \"The balance cannot be negative.\",\n        \"accountNumber\": \"Cannot be empty\"\n    }\n}"
+						},
+						{
+							"name": "[ERROR] Client not exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 100,\r\n    \"clientId\": \"13606a7b-cc4f-4836-b28b-8e6176376d81\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:28:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:43:21.6703994\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Account already exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"00001\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialBalance\": 100,\r\n    \"clientId\": \"2fc28709-b2ef-44c3-93bb-28f2c5ee7be5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:31:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"An account with account number 00001 already exists\",\n    \"timestamp\": \"2023-06-21T20:44:17.8807519\",\n    \"details\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00001",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "00001"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get account",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00002",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "00002"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:35:15 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accountNumber\": \"00002\",\n    \"accountType\": \"SAVINGS\",\n    \"initialBalance\": 100.0,\n    \"status\": \"ACTIVE\",\n    \"client\": \"Christian Chunga\"\n}"
+						},
+						{
+							"name": "[ERROR] Not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00005",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "00005"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:35:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:44:57.9564926\",\n    \"details\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update account",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"132122222212\", // Account to update\r\n    \"accountType\": \"CHECKING\", // SAVINGS, CHECKING\r\n    \"status\": \"DELETED\" // ACTIVE, DISABLED, DELETED\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/accounts",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update account",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321212\",\r\n    \"accountType\": \"CHECKING\",\r\n    \"status\": \"DELETED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:47:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accountNumber\": \"1321212\",\n    \"accountType\": \"CHECKING\",\n    \"initialBalance\": 100,\n    \"status\": \"DELETED\",\n    \"client\": \"Christian Chunga\"\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"132122222212\",\r\n    \"accountType\": \"CHECKING\",\r\n    \"status\": \"DELETED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:48:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T16:48:02.4049928\",\n    \"details\": {\n        \"accountNumber\": \"The account number cannot be longer than 10 characters.\"\n    }\n}"
+						},
+						{
+							"name": "[ERROR] body json parse error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321212\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"status\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:47:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid data format\",\n    \"timestamp\": \"2023-06-21T16:47:13.4759877\",\n    \"details\": {\n        \"error\": \"The provided data could not be understood. Please check your input and try again.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00003",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "00003"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete account",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00003",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "00003"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:49:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[ERROR] Not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/accounts?accountNumber=00007",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "accountNumber",
+											"value": "00007"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 21 Jun 2023 21:51:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T20:45:22.510801\",\n    \"details\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Movement",
+			"item": [
+				{
+					"name": "Create movement",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"00001\",\r\n    \"movementType\": \"WITHDRAWAL\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/movements",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"movements"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create movement",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321\",\r\n    \"movementType\": \"DEPOSIT\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 00:30:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"date\": \"2023-06-21T19:30:07.2176944\",\n    \"client\": \"Christian Chunga\",\n    \"accountNumber\": \"1321\",\n    \"accountType\": \"SAVINGS\",\n    \"initialBalance\": 981.03,\n    \"status\": \"ACTIVE\",\n    \"movementValue\": 1,\n    \"balance\": 982.03\n}"
+						},
+						{
+							"name": "[ERROR] Daily quota exceeded",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321\",\r\n    \"movementType\": \"WITHDRAWAL\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 00:29:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Daily quota exceeded\",\n    \"timestamp\": \"2023-06-21T19:29:27.0162497\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountNumber\": \"1321\",\r\n    \"movementType\": \"DEPOSIT\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 00:30:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T19:30:23.0110427\",\n    \"details\": {\n        \"value\": \"The minimum value is 1 cent.\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get movement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/movements?movementId=241e140a-420b-2d6d-b991-764205ee953a",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"movements"
+							],
+							"query": [
+								{
+									"key": "movementId",
+									"value": "241e140a-420b-2d6d-b991-764205ee953a"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get movement",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements?movementId=241e140a-420b-4d6d-b991-764205ee953a",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									],
+									"query": [
+										{
+											"key": "movementId",
+											"value": "241e140a-420b-4d6d-b991-764205ee953a"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 05:54:40 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"date\": \"2023-06-22T00:53:05\",\n    \"client\": \"Christian Chunga\",\n    \"accountNumber\": \"00001\",\n    \"accountType\": \"SAVINGS\",\n    \"initialBalance\": 100,\n    \"status\": \"ACTIVE\",\n    \"movementValue\": 100,\n    \"balance\": 200\n}"
+						},
+						{
+							"name": "[ERROR] Not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements?movementId=241e140a-420b-2d6d-b991-764205ee953a",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									],
+									"query": [
+										{
+											"key": "movementId",
+											"value": "241e140a-420b-2d6d-b991-764205ee953a"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 05:54:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-22T00:54:49.5199935\",\n    \"details\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update movement",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movementId\": \"0fd60507-1091-41a0-bd9d-e0a836d1fde1\",\r\n    \"movementType\": \"WITHDRAWAL\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 71\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/movements",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"movements"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update movement",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"movementId\": \"83b387ec-f5cd-4524-85ac-06463f798cbc\",\r\n    \"movementType\": \"DEPOSIT\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:34:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"date\": \"2023-06-21T23:25:57\",\n    \"client\": \"Christian Chunga\",\n    \"accountNumber\": \"00002\",\n    \"accountType\": \"SAVINGS\",\n    \"initialBalance\": 90,\n    \"status\": \"ACTIVE\",\n    \"movementValue\": 10,\n    \"balance\": 100\n}"
+						},
+						{
+							"name": "[ERROR] Balance error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"movementId\": \"0fd60507-1091-41a0-bd9d-e0a836d1fde1\",\r\n    \"movementType\": \"WITHDRAWAL\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 200\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:51:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"It is not possible to update the balance sheets\",\n    \"timestamp\": \"2023-06-21T23:51:26.5762322\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Validation error",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"movementId\": \"83b387ec-f5cd-4524-85ac-06463f798cbc\",\r\n    \"movementType\": \"DEPOSIT\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:39:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Body validation error\",\n    \"timestamp\": \"2023-06-21T23:39:27.5630465\",\n    \"details\": {\n        \"value\": \"The minimum value is 1 cent.\"\n    }\n}"
+						},
+						{
+							"name": "[ERROR] Not found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"movementId\": \"83b387ec-f5cd-4524-85ac-06463f712cbc\",\r\n    \"movementType\": \"DEPOSIT\", // DEPOSIT, WITHDRAWAL\r\n    \"value\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:39:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T23:39:56.8522535\",\n    \"details\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete movement",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/movements?movementId=4d256b43-bb67-4119-8009-5a7134f25937",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"movements"
+							],
+							"query": [
+								{
+									"key": "movementId",
+									"value": "4d256b43-bb67-4119-8009-5a7134f25937"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete movement",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements?movementId=07ae699f-a353-4de0-8b8b-88dd6b399d73",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									],
+									"query": [
+										{
+											"key": "movementId",
+											"value": "07ae699f-a353-4de0-8b8b-88dd6b399d73"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:41:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[ERROR] Balance error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements?movementId=83b387ec-f5cd-4524-85ac-06463f798cbc",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									],
+									"query": [
+										{
+											"key": "movementId",
+											"value": "83b387ec-f5cd-4524-85ac-06463f798cbc"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:53:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"It is not possible to update the balance sheets\",\n    \"timestamp\": \"2023-06-21T23:53:49.5053181\",\n    \"details\": null\n}"
+						},
+						{
+							"name": "[ERROR] Not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/movements?movementId=07ae699f-a353-4de0-8b81-88dd6b399d73",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"movements"
+									],
+									"query": [
+										{
+											"key": "movementId",
+											"value": "07ae699f-a353-4de0-8b81-88dd6b399d73"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 04:41:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-21T23:41:25.9896096\",\n    \"details\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Get statement report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}:{{port}}/api/reports?clientId=2fc28709-b2ef-44c3-93bb-28f2c5ee7be5&startDate=2023-06-20&endDate=2023-06-23",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "clientId",
+									"value": "2fc28709-b2ef-44c3-93bb-28f2c5ee7be5"
+								},
+								{
+									"key": "startDate",
+									"value": "2023-06-20"
+								},
+								{
+									"key": "endDate",
+									"value": "2023-06-23"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[ERROR] Client not exist",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}:{{port}}/api/reports?clientId=43885d46-589b-401d-852a-16e5ef64afb0&startDate=2023-06-20&endDate=2023-06-23",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "43885d46-589b-401d-852a-16e5ef64afb0"
+										},
+										{
+											"key": "startDate",
+											"value": "2023-06-20"
+										},
+										{
+											"key": "endDate",
+											"value": "2023-06-23"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 22 Jun 2023 06:00:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Record not found\",\n    \"timestamp\": \"2023-06-22T01:00:10.0499173\",\n    \"details\": null\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "8080",
+			"type": "string"
+		}
+	]
+}

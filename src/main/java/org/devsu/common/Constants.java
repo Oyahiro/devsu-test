@@ -20,6 +20,6 @@ public class Constants {
 
     // OTHER CONSTANTS
 
-    public static final double DAILY_WITHDRAWAL_LIMIT = 10000.00;
+    public static final double DAILY_WITHDRAWAL_LIMIT = 1000.00;
 
 }
