@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import org.devsu.enums.MovementType;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name="movement")
+@Table(name = "movement")
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Movement extends AbstractEntity {
@@ -20,7 +21,7 @@ public class Movement extends AbstractEntity {
     private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="movement_type", length = 15)
+    @Column(name = "movement_type", length = 15)
     private MovementType movementType;
 
     @DecimalMin(value = "0.01", message = "The minimum value is 1 cent.")

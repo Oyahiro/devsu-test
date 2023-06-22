@@ -4,17 +4,19 @@ import org.devsu.common.Exceptions;
 import org.devsu.dto.requests.CreateMovementRequestDTO;
 import org.devsu.dto.requests.UpdateMovementRequestDTO;
 import org.devsu.dto.responses.MovementResponseDTO;
-import org.devsu.entity.Movement;
 import org.devsu.entity.Account;
+import org.devsu.entity.Movement;
 import org.devsu.enums.MovementType;
-import org.devsu.repository.MovementRepository;
 import org.devsu.repository.AccountRepository;
+import org.devsu.repository.ClientRepository;
+import org.devsu.repository.MovementRepository;
 import org.devsu.service.interfaces.IMovementService;
+import org.devsu.utils.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -34,21 +36,22 @@ public class MovementService implements IMovementService {
     }
 
     @Override
-    public MovementResponseDTO read(UUID movementId) throws Exception {
+    public MovementResponseDTO read(UUID movementId) {
         Optional<Movement> optionalMovement = movementRepository.findById(movementId);
         if (optionalMovement.isEmpty()) {
             LOG.error(String.format("The movement with id %s does not exist", movementId));
-            throw  new Exceptions.RecordNotFoundException("Record not found");
+            throw new Exceptions.RecordNotFoundException("Record not found");
         }
 
         return new MovementResponseDTO(optionalMovement.get());
     }
 
+    @Transactional
     @Override
     public MovementResponseDTO create(CreateMovementRequestDTO movement) throws Exception {
         Account account = getAccountByAccountNumber(movement.getAccountNumber());
         double currentBalance = getCurrentBalance(account);
-        double movementValue = roundToTwoDecimals(movement.getValue());
+        double movementValue = NumberUtils.roundToTwoDecimals(movement.getValue());
         double newBalance = calculateAndValidateNewBalance(account, currentBalance, movementValue, movement.getMovementType());
 
         if (newBalance < 0) {
@@ -60,7 +63,7 @@ public class MovementService implements IMovementService {
         movementToSave.setDate(LocalDateTime.now());
         movementToSave.setMovementType(movement.getMovementType());
         movementToSave.setValue(movementValue);
-        movementToSave.setBalance(roundToTwoDecimals(newBalance));
+        movementToSave.setBalance(NumberUtils.roundToTwoDecimals(newBalance));
         movementToSave.setAccount(account);
         movementToSave.setUpdated(false);
 
@@ -102,7 +105,7 @@ public class MovementService implements IMovementService {
             m.setBalance(balanceBeforeThisMovement);
             movementsToUpdate.add(m);
 
-            if(balanceBeforeThisMovement < 0) {
+            if (balanceBeforeThisMovement < 0) {
                 LOG.error(String.format("The balance becomes negative when the movement with id %s is eliminated", movement.getMovementId()));
                 throw new Exceptions.BalanceCalculationException("It is not possible to update the balance sheets");
             }
@@ -136,7 +139,7 @@ public class MovementService implements IMovementService {
             m.setBalance(balanceBeforeThisMovement);
             movementsToUpdate.add(m);
 
-            if(balanceBeforeThisMovement < 0) {
+            if (balanceBeforeThisMovement < 0) {
                 LOG.error(String.format("The balance becomes negative when the movement with id %s is eliminated", movementId));
                 throw new Exceptions.BalanceCalculationException("It is not possible to update the balance sheets");
             }
@@ -158,10 +161,6 @@ public class MovementService implements IMovementService {
         return movementRepository.findTopByAccountAccountNumberOrderByDateDesc(account.getAccountNumber())
                 .map(Movement::getBalance)
                 .orElse(account.getInitialBalance());
-    }
-
-    private double roundToTwoDecimals(double value) {
-        return Math.round(value * 100.0) / 100.0;
     }
 
     private double calculateAndValidateNewBalance(Account account, double currentBalance, double movementValue, MovementType movementType) {

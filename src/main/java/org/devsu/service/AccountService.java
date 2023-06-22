@@ -13,6 +13,7 @@ import org.devsu.service.interfaces.IAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +37,7 @@ public class AccountService implements IAccountService {
         return new AccountResponseDTO(account);
     }
 
+    @Transactional
     @Override
     public AccountResponseDTO create(CreateAccountRequestDTO account) throws Exception {
         Client client = findClient(account.getClientId());

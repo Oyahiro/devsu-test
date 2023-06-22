@@ -29,7 +29,7 @@ public class ClientResponseDTO {
         this.password = client.getPassword();
         this.status = client.getStatus();
 
-        if(Objects.nonNull(client.getPerson())) {
+        if (Objects.nonNull(client.getPerson())) {
             this.name = client.getPerson().getName();
             this.gender = client.getPerson().getGender();
             this.age = client.getPerson().getAge();

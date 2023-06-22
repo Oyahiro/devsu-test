@@ -9,8 +9,11 @@ import java.util.UUID;
 public interface IClientService {
 
     ClientResponseDTO read(UUID clientId) throws Exception;
+
     ClientResponseDTO create(CreateClientRequestDTO client) throws Exception;
+
     ClientResponseDTO update(UpdateClientRequestDTO client) throws Exception;
+
     void delete(UUID clientId) throws Exception;
 
 }

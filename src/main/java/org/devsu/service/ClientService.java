@@ -14,6 +14,7 @@ import org.devsu.utils.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Objects;
@@ -34,11 +35,12 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public ClientResponseDTO read(UUID clientId) throws Exception {
+    public ClientResponseDTO read(UUID clientId) {
         Client client = findClientById(clientId);
         return new ClientResponseDTO(client);
     }
 
+    @Transactional
     @Override
     public ClientResponseDTO create(CreateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
@@ -50,6 +52,7 @@ public class ClientService implements IClientService {
         return new ClientResponseDTO(savedClient);
     }
 
+    @Transactional
     @Override
     public ClientResponseDTO update(UpdateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
@@ -60,6 +63,7 @@ public class ClientService implements IClientService {
         return new ClientResponseDTO(updatedClient);
     }
 
+    @Transactional
     @Override
     public void delete(UUID clientId) throws Exception {
         Client client = findClientById(clientId);

@@ -6,13 +6,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.devsu.enums.Gender;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Data
 @Entity
-@Table(name="person", uniqueConstraints = {
+@Table(name = "person", uniqueConstraints = {
         @UniqueConstraint(name = "UK_PERSON_IDENTIFICATION_NUMBER", columnNames = {"identification_number"})
 })
 @EqualsAndHashCode(callSuper = true)
@@ -21,12 +20,12 @@ import javax.validation.constraints.*;
 public class Person extends AbstractEntity {
 
     @NotEmpty(message = "Cannot be empty")
-    @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
-    @Column(name="name", length = 100)
+    @Pattern(regexp = "^[A-Za-z_ ]*$", message = "This field only accepts letters")
+    @Column(name = "name", length = 100)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="gender", length = 20)
+    @Column(name = "gender", length = 20)
     private Gender gender;
 
     @Min(value = 0, message = "The value cannot be less than 0")
@@ -36,17 +35,17 @@ public class Person extends AbstractEntity {
 
     @NotEmpty(message = "Cannot be empty")
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
-    @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
-    @Column(name="identification_number", length = 10)
+    @Pattern(regexp = "^[0-9]{10}$", message = "This field only accepts numeric values")
+    @Column(name = "identification_number", length = 10)
     private String identificationNumber;
 
     @NotEmpty(message = "Cannot be empty")
-    @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
-    @Column(name = "address", length = 255)
+    @Pattern(regexp = "^[A-Za-z_ ]*$", message = "This field only accepts letters")
+    @Column(name = "address")
     private String address;
 
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
-    @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
+    @Pattern(regexp = "^[0-9]{10}$", message = "This field only accepts numeric values")
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
 

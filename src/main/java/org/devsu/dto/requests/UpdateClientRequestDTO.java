@@ -7,7 +7,6 @@ import org.devsu.enums.Gender;
 import org.devsu.enums.Status;
 
 import javax.validation.constraints.*;
-
 import java.util.UUID;
 
 @Getter
@@ -19,7 +18,7 @@ public class UpdateClientRequestDTO {
     private UUID clientId;
 
     @NotEmpty(message = "Cannot be empty")
-    @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
+    @Pattern(regexp = "^[A-Za-z_ ]*$", message = "This field only accepts letters")
     private String name;
 
     @NotNull(message = "Value is required")
@@ -31,15 +30,15 @@ public class UpdateClientRequestDTO {
 
     @NotEmpty(message = "Cannot be empty")
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
-    @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
+    @Pattern(regexp = "^[0-9]{10}$", message = "This field only accepts numeric values")
     private String identificationNumber;
 
     @NotEmpty(message = "Cannot be empty")
-    @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
+    @Pattern(regexp = "^[A-Za-z_ ]*$", message = "This field only accepts letters")
     private String address;
 
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
-    @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
+    @Pattern(regexp = "^[0-9]{10}$", message = "This field only accepts numeric values")
     private String phoneNumber;
 
     @NotEmpty(message = "Cannot be empty")

@@ -16,11 +16,9 @@ public interface MovementRepository extends AbstractEntityRepository<Movement> {
 
     Optional<Movement> findTopByAccountAndDateBefore(Account account, LocalDateTime date);
 
-    List<Movement> findByAccountAccountNumberAndDateBetween(String accountNumber, LocalDateTime start, LocalDateTime end);
+    List<Movement> findByAccountAndDateBetweenOrderByDateAsc(Account account, LocalDateTime start, LocalDateTime end);
 
-    List<Movement> findAllByAccountAndDateAfter(Account account, LocalDateTime date);
     List<Movement> findAllByAccountAndDateAfterOrderByDateAsc(Account account, LocalDateTime date);
-
 
 
     @Query("SELECT SUM(m.value) FROM Movement m WHERE m.account.accountNumber = :accountNumber " +

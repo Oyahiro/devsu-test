@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.devsu.entity.Account;
-import org.devsu.entity.Client;
 import org.devsu.enums.AccountType;
-import org.devsu.enums.Gender;
 import org.devsu.enums.Status;
 
 import java.util.Objects;
@@ -28,7 +26,7 @@ public class AccountResponseDTO {
         this.initialBalance = account.getInitialBalance();
         this.status = account.getStatus();
 
-        if(Objects.nonNull(account.getClient())) {
+        if (Objects.nonNull(account.getClient())) {
             this.client = account.getClient().getName();
         }
     }

@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 
         Map<String, Object> errors = new LinkedHashMap<>();
 
-        for(FieldError error : ex.getBindingResult().getFieldErrors()) {
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.put(error.getField(), error.getDefaultMessage());
         }
 

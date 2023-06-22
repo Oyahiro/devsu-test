@@ -7,12 +7,15 @@ import org.devsu.enums.AccountType;
 import org.devsu.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name="account", uniqueConstraints = {
+@Table(name = "account", uniqueConstraints = {
         @UniqueConstraint(name = "UK_ACCOUNT_NUMBER", columnNames = {"account_number"})
 })
 @EqualsAndHashCode(callSuper = true)
@@ -21,12 +24,12 @@ public class Account extends AbstractEntity {
 
     @NotEmpty(message = "Cannot be empty")
     @Size(max = 10, message = "The account number cannot be longer than 10 characters.")
-    @Pattern(regexp="^[0-9]{0,10}$", message="This field only accepts numeric values")
-    @Column(name="account_number", length = 10)
+    @Pattern(regexp = "^[0-9]{0,10}$", message = "This field only accepts numeric values")
+    @Column(name = "account_number", length = 10)
     private String accountNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="account_type", length = 10)
+    @Column(name = "account_type", length = 10)
     private AccountType accountType;
 
     @Min(value = 0, message = "The balance cannot be negative.")
@@ -34,7 +37,7 @@ public class Account extends AbstractEntity {
     private double initialBalance;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="status", length = 10)
+    @Column(name = "status", length = 10)
     private Status status;
 
     @ManyToOne

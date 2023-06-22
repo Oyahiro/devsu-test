@@ -1,9 +1,9 @@
 package org.devsu.controller;
 
+import org.devsu.dto.ErrorResponseDTO;
 import org.devsu.dto.requests.CreateClientRequestDTO;
 import org.devsu.dto.requests.UpdateClientRequestDTO;
 import org.devsu.dto.responses.ClientResponseDTO;
-import org.devsu.dto.ErrorResponseDTO;
 import org.devsu.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
