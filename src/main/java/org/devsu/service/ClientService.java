@@ -111,7 +111,7 @@ public class ClientService implements IClientService {
         Person person = clientToUpdate.getPerson();
         if (Objects.isNull(person)) {
             LOG.error(String.format("There is no person associated with the clientId %s", clientToUpdate.getId()));
-            throw new Exception("The record to be modified was not found");
+            throw new Exceptions.RecordNotFoundException("The record to be modified was not found");
         }
         updatePersonDetails(person, clientRequest);
         updateClientDetails(clientToUpdate, clientRequest);

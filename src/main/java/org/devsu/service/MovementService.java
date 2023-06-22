@@ -8,7 +8,6 @@ import org.devsu.entity.Account;
 import org.devsu.entity.Movement;
 import org.devsu.enums.MovementType;
 import org.devsu.repository.AccountRepository;
-import org.devsu.repository.ClientRepository;
 import org.devsu.repository.MovementRepository;
 import org.devsu.service.interfaces.IMovementService;
 import org.devsu.utils.NumberUtils;
