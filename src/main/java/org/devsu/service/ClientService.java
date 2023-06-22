@@ -1,5 +1,6 @@
 package org.devsu.service;
 
+import org.devsu.common.Exceptions;
 import org.devsu.dto.requests.CreateClientRequestDTO;
 import org.devsu.dto.requests.UpdateClientRequestDTO;
 import org.devsu.dto.responses.ClientResponseDTO;
@@ -34,86 +35,95 @@ public class ClientService implements IClientService {
 
     @Override
     public ClientResponseDTO read(UUID clientId) throws Exception {
-        Optional<Client> optionalClient = clientRepository.findById(clientId);
-        if (optionalClient.isEmpty()) {
-            LOG.error(String.format("The client with id %s does not exist", clientId));
-            throw new Exception("Record not found");
-        }
-
-        return new ClientResponseDTO(optionalClient.get());
+        Client client = findClientById(clientId);
+        return new ClientResponseDTO(client);
     }
 
     @Override
     public ClientResponseDTO create(CreateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
-        Optional<Person> optionalPerson = personRepository.findByIdentificationNumber(client.getIdentificationNumber());
-        if (optionalPerson.isPresent()) {
-            LOG.error("There is already a client registered with this identification number");
-            throw new Exception("There is already a client registered with this identification number");
-        }
+        validateNonExistentPerson(client.getIdentificationNumber());
 
-        Person personToSave = new Person();
-        personToSave.setName(client.getName());
-        personToSave.setGender(client.getGender());
-        personToSave.setAge(client.getAge());
-        personToSave.setIdentificationNumber(client.getIdentificationNumber());
-        personToSave.setAddress(client.getAddress());
-        personToSave.setPhoneNumber(client.getPhoneNumber());
+        Person savedPerson = buildAndSavePerson(client);
+        Client savedClient = buildAndSaveClient(savedPerson, client.getIdentificationNumber());
 
-        personToSave = personRepository.saveAndFlush(personToSave);
-
-        Client clientToSave = new Client();
-        clientToSave.setPassword(client.getIdentificationNumber());
-        clientToSave.setStatus(Status.ACTIVE);
-        clientToSave.setPerson(personToSave);
-
-        clientToSave = clientRepository.save(clientToSave);
-
-        return new ClientResponseDTO(clientToSave);
+        return new ClientResponseDTO(savedClient);
     }
 
     @Override
     public ClientResponseDTO update(UpdateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
+        Client clientToUpdate = findClientById(client.getClientId());
+        updateClientAndPersonObjects(clientToUpdate, client);
 
-        Optional<Client> optionalClient = clientRepository.findById(client.getClientId());
-        if (optionalClient.isEmpty()) {
-            LOG.error(String.format("The client with id %s does not exist", client.getClientId()));
-            throw new Exception("The record to be modified was not found");
-        }
-
-        if (Objects.isNull(optionalClient.get().getPerson())) {
-            LOG.error(String.format("There is no person associated with the clientId %s", optionalClient.get().getId()));
-            throw new Exception("The record to be modified was not found");
-        }
-
-        Client clientToSave = optionalClient.get();
-        Person personToSave = clientToSave.getPerson();
-
-        personToSave.setName(client.getName());
-        personToSave.setGender(client.getGender());
-        personToSave.setAge(client.getAge());
-        personToSave.setIdentificationNumber(client.getIdentificationNumber());
-        personToSave.setAddress(client.getAddress());
-        personToSave.setPhoneNumber(client.getPhoneNumber());
-
-        clientToSave.setPassword(client.getPassword());
-        clientToSave.setStatus(client.getStatus());
-        clientToSave.setPerson(personToSave);
-
-        clientToSave = clientRepository.save(clientToSave);
-
-        return new ClientResponseDTO(clientToSave);
+        Client updatedClient = clientRepository.save(clientToUpdate);
+        return new ClientResponseDTO(updatedClient);
     }
 
     @Override
     public void delete(UUID clientId) throws Exception {
-        Optional<Client> optionalClient = clientRepository.findById(clientId);
-        if (optionalClient.isEmpty()) {
-            LOG.error(String.format("The client with id %s does not exist", clientId));
+        Client client = findClientById(clientId);
+        clientRepository.delete(client);
+    }
+
+    private Client findClientById(UUID clientId) {
+        return clientRepository.findById(clientId)
+                .orElseThrow(() -> {
+                    LOG.error(String.format("The client with id %s not exist", clientId));
+                    return new Exceptions.RecordNotFoundException("Record not found");
+                });
+    }
+
+    private void validateNonExistentPerson(String identificationNumber) throws Exception {
+        Optional<Person> optionalPerson = personRepository.findByIdentificationNumber(identificationNumber);
+        if (optionalPerson.isPresent()) {
+            LOG.error(String.format("There is already a client registered with identification number %s", identificationNumber));
+            throw new Exception("There is already a client registered with this identification number");
+        }
+    }
+
+    private Person buildAndSavePerson(CreateClientRequestDTO clientRequest) {
+        Person person = new Person();
+        person.setName(clientRequest.getName());
+        person.setGender(clientRequest.getGender());
+        person.setAge(clientRequest.getAge());
+        person.setIdentificationNumber(clientRequest.getIdentificationNumber());
+        person.setAddress(clientRequest.getAddress());
+        person.setPhoneNumber(clientRequest.getPhoneNumber());
+
+        return personRepository.saveAndFlush(person);
+    }
+
+    private Client buildAndSaveClient(Person person, String password) {
+        Client client = new Client();
+        client.setPassword(password);
+        client.setStatus(Status.ACTIVE);
+        client.setPerson(person);
+
+        return clientRepository.save(client);
+    }
+
+    private void updateClientAndPersonObjects(Client clientToUpdate, UpdateClientRequestDTO clientRequest) throws Exception {
+        Person person = clientToUpdate.getPerson();
+        if (Objects.isNull(person)) {
+            LOG.error(String.format("There is no person associated with the clientId %s", clientToUpdate.getId()));
             throw new Exception("The record to be modified was not found");
         }
+        updatePersonDetails(person, clientRequest);
+        updateClientDetails(clientToUpdate, clientRequest);
+    }
 
-        clientRepository.deleteById(clientId);
+    private void updatePersonDetails(Person personToUpdate, UpdateClientRequestDTO clientRequest) {
+        personToUpdate.setName(clientRequest.getName());
+        personToUpdate.setGender(clientRequest.getGender());
+        personToUpdate.setAge(clientRequest.getAge());
+        personToUpdate.setIdentificationNumber(clientRequest.getIdentificationNumber());
+        personToUpdate.setAddress(clientRequest.getAddress());
+        personToUpdate.setPhoneNumber(clientRequest.getPhoneNumber());
+    }
+
+    private void updateClientDetails(Client clientToUpdate, UpdateClientRequestDTO clientRequest) {
+        clientToUpdate.setPassword(clientRequest.getPassword());
+        clientToUpdate.setStatus(clientRequest.getStatus());
     }
 }

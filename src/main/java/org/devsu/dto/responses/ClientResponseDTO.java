@@ -14,6 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class ClientResponseDTO {
 
+    private String clientId;
     private String name;
     private Gender gender;
     private int age;
@@ -24,6 +25,7 @@ public class ClientResponseDTO {
     private Status status;
 
     public ClientResponseDTO(Client client) {
+        this.clientId = client.getId().toString();
         this.password = client.getPassword();
         this.status = client.getStatus();
 

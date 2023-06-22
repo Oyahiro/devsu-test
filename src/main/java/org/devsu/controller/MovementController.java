@@ -1,10 +1,10 @@
 package org.devsu.controller;
 
-import org.devsu.dto.requests.CreateClientRequestDTO;
-import org.devsu.dto.requests.UpdateClientRequestDTO;
-import org.devsu.dto.responses.ClientResponseDTO;
 import org.devsu.dto.ErrorResponseDTO;
-import org.devsu.service.ClientService;
+import org.devsu.dto.requests.CreateMovementRequestDTO;
+import org.devsu.dto.requests.UpdateMovementRequestDTO;
+import org.devsu.dto.responses.MovementResponseDTO;
+import org.devsu.service.MovementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +13,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.devsu.common.Constants.URI_CLIENTS;
+import static org.devsu.common.Constants.URI_MOVEMENTS;
 
 @RestController
-@RequestMapping(value = {URI_CLIENTS})
-public class ClientController {
+@RequestMapping(value = {URI_MOVEMENTS})
+public class MovementController {
 
-    private final Logger LOG = LoggerFactory.getLogger(ClientController.class);
+    private final Logger LOG = LoggerFactory.getLogger(MovementController.class);
 
-    private final ClientService clientService;
+    private final MovementService movementService;
 
     @Autowired
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+    public MovementController(MovementService movementService) {
+        this.movementService = movementService;
     }
 
     @GetMapping("")
-    public ResponseEntity<?> read(@RequestParam UUID clientId) {
+    public ResponseEntity<?> read(@RequestParam UUID movementId) {
         try {
-            ClientResponseDTO clientResponse = clientService.read(clientId);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            MovementResponseDTO movementResponse = movementService.read(movementId);
+            return new ResponseEntity<>(movementResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -48,10 +47,10 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@Valid @RequestBody CreateClientRequestDTO client) {
+    public ResponseEntity<?> create(@Valid @RequestBody CreateMovementRequestDTO movement) {
         try {
-            ClientResponseDTO clientResponse = clientService.create(client);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            MovementResponseDTO movementResponse = movementService.create(movement);
+            return new ResponseEntity<>(movementResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -63,10 +62,10 @@ public class ClientController {
     }
 
     @PatchMapping("")
-    public ResponseEntity<?> update(@Valid @RequestBody UpdateClientRequestDTO client) {
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateMovementRequestDTO movement) {
         try {
-            ClientResponseDTO clientResponse = clientService.update(client);
-            return new ResponseEntity<>(clientResponse, HttpStatus.OK);
+            MovementResponseDTO movementResponse = movementService.update(movement);
+            return new ResponseEntity<>(movementResponse, HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
 
@@ -78,9 +77,9 @@ public class ClientController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> delete(@RequestParam UUID clientId) {
+    public ResponseEntity<?> delete(@RequestParam UUID movementId) {
         try {
-            clientService.delete(clientId);
+            movementService.delete(movementId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error(ex.getMessage());

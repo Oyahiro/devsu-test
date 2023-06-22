@@ -20,7 +20,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class Client extends AbstractEntity {
 
-        @NotEmpty(message = "Cannot be empty")
+    @NotEmpty(message = "Cannot be empty")
     @Column(name = "password", length = 50)
     private String password;
 

@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class CreateClientRequestDTO {
 
-        @NotEmpty(message = "Cannot be empty")
+    @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     private String name;
 
@@ -23,12 +23,12 @@ public class CreateClientRequestDTO {
     @Max(value = 150, message = "The value cannot be greater than 0")
     private int age;
 
-        @NotEmpty(message = "Cannot be empty")
+    @NotEmpty(message = "Cannot be empty")
     @Size(min = 10, max = 10, message = "This field can only have 10 characters")
     @Pattern(regexp="^[0-9]{10}$", message="This field only accepts numeric values")
     private String identificationNumber;
 
-        @NotEmpty(message = "Cannot be empty")
+    @NotEmpty(message = "Cannot be empty")
     @Pattern(regexp="^[A-Za-z_ ]*$", message="This field only accepts letters")
     private String address;
 

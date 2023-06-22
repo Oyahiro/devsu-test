@@ -1,5 +1,6 @@
 package org.devsu.service;
 
+import org.devsu.common.Exceptions;
 import org.devsu.dto.requests.CreateAccountRequestDTO;
 import org.devsu.dto.requests.UpdateAccountRequestDTO;
 import org.devsu.dto.responses.AccountResponseDTO;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AccountService implements IAccountService {
@@ -30,66 +32,73 @@ public class AccountService implements IAccountService {
 
     @Override
     public AccountResponseDTO read(String accountId) throws Exception {
-        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountId);
-        if (optionalAccount.isEmpty()) {
-            LOG.error(String.format("The account with id %s does not exist", accountId));
-            throw new Exception("Record not found");
-        }
-
-        return new AccountResponseDTO(optionalAccount.get());
+        Account account = findAccount(accountId);
+        return new AccountResponseDTO(account);
     }
 
     @Override
     public AccountResponseDTO create(CreateAccountRequestDTO account) throws Exception {
-        Optional<Client> optionalClient = clientRepository.findById(account.getClientId());
-        if (optionalClient.isEmpty()) {
-            LOG.error(String.format("The client with id %s not exist", account.getClientId()));
-            throw new Exception("The client with the specified id does not exist");
-        }
+        Client client = findClient(account.getClientId());
+        validateAccountNonExistence(account.getAccountNumber());
 
-        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(account.getAccountNumber());
-        if (optionalAccount.isPresent()) {
-            LOG.error(String.format("An account with account number %s already exists", account.getAccountNumber()));
-            throw new Exception(String.format("An account with account number %s already exists", account.getAccountNumber()));
-        }
+        Account newAccount = buildNewAccount(account, client);
+        Account savedAccount = accountRepository.save(newAccount);
 
-        Account accountToSave = new Account();
-        accountToSave.setAccountNumber(account.getAccountNumber());
-        accountToSave.setAccountType(account.getAccountType());
-        accountToSave.setInitialBalance(account.getInitialBalance());
-        accountToSave.setStatus(Status.ACTIVE);
-        accountToSave.setClient(optionalClient.get());
-
-        accountToSave = accountRepository.save(accountToSave);
-
-        return new AccountResponseDTO(accountToSave);
+        return new AccountResponseDTO(savedAccount);
     }
 
     @Override
     public AccountResponseDTO update(UpdateAccountRequestDTO account) throws Exception {
-        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(account.getAccountNumber());
-        if (optionalAccount.isEmpty()) {
-            LOG.error(String.format("The account with account number %s does not exist", account.getAccountNumber()));
-            throw new Exception("The record to be modified was not found");
-        }
+        Account accountToUpdate = findAccount(account.getAccountNumber());
+        updateAccountObject(accountToUpdate, account);
 
-        Account accountToSave = optionalAccount.get();
-        accountToSave.setAccountType(account.getAccountType());
-        accountToSave.setStatus(account.getStatus());
+        Account updatedAccount = accountRepository.save(accountToUpdate);
 
-        accountToSave = accountRepository.save(accountToSave);
-
-        return new AccountResponseDTO(accountToSave);
+        return new AccountResponseDTO(updatedAccount);
     }
 
     @Override
     public void delete(String accountNumber) throws Exception {
-        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountNumber);
-        if (optionalAccount.isEmpty()) {
-            LOG.error(String.format("The account with account number %s does not exist", optionalAccount));
-            throw new Exception("The record to be modified was not found");
-        }
+        Account account = findAccount(accountNumber);
+        accountRepository.delete(account);
+    }
 
-        accountRepository.delete(optionalAccount.get());
+    private Client findClient(UUID clientId) throws Exception {
+        return clientRepository.findById(clientId)
+                .orElseThrow(() -> createRecordNotFoundException("client", clientId.toString()));
+    }
+
+    private Account findAccount(String accountNumber) throws Exception {
+        return accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> createRecordNotFoundException("account", accountNumber));
+    }
+
+    private void validateAccountNonExistence(String accountNumber) throws Exception {
+        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountNumber);
+        if (optionalAccount.isPresent()) {
+            LOG.error(String.format("An account with account number %s already exists", accountNumber));
+            throw new Exception(String.format("An account with account number %s already exists", accountNumber));
+        }
+    }
+
+    private Account buildNewAccount(CreateAccountRequestDTO accountRequest, Client client) {
+        Account newAccount = new Account();
+        newAccount.setAccountNumber(accountRequest.getAccountNumber());
+        newAccount.setAccountType(accountRequest.getAccountType());
+        newAccount.setInitialBalance(accountRequest.getInitialBalance());
+        newAccount.setStatus(Status.ACTIVE);
+        newAccount.setClient(client);
+        return newAccount;
+    }
+
+    private void updateAccountObject(Account accountToUpdate, UpdateAccountRequestDTO accountRequest) {
+        accountToUpdate.setAccountType(accountRequest.getAccountType());
+        accountToUpdate.setStatus(accountRequest.getStatus());
+    }
+
+    private Exception createRecordNotFoundException(String recordType, String id) {
+        String errorMessage = String.format("The %s with id %s does not exist", recordType, id);
+        LOG.error(errorMessage);
+        return new Exceptions.RecordNotFoundException("Record not found");
     }
 }

@@ -8,6 +8,7 @@ import org.devsu.enums.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -39,5 +40,8 @@ public class Account extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Movement> movements;
 
 }

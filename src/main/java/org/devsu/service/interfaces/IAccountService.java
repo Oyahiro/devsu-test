@@ -4,8 +4,6 @@ import org.devsu.dto.requests.CreateAccountRequestDTO;
 import org.devsu.dto.requests.UpdateAccountRequestDTO;
 import org.devsu.dto.responses.AccountResponseDTO;
 
-import java.util.UUID;
-
 public interface IAccountService {
 
     AccountResponseDTO read(String accountNumber) throws Exception;
