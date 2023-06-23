@@ -1,11 +1,14 @@
 package org.devsu.service;
 
+import org.devsu.common.Constants;
 import org.devsu.common.Exceptions;
+import org.devsu.dto.PrimaryUser;
 import org.devsu.dto.requests.CreateClientRequestDTO;
 import org.devsu.dto.requests.UpdateClientRequestDTO;
 import org.devsu.entity.Client;
 import org.devsu.entity.Person;
 import org.devsu.enums.Gender;
+import org.devsu.enums.Role;
 import org.devsu.enums.Status;
 import org.devsu.repository.ClientRepository;
 import org.devsu.repository.PersonRepository;
@@ -15,9 +18,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,6 +45,15 @@ public class ClientServiceTest {
     @Mock
     private ClientRepository clientRepository;
 
+    @Mock
+    private SecurityContext securityContext;
+
+    @Mock
+    private Authentication authentication;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     public void init() {
     }
@@ -58,6 +73,8 @@ public class ClientServiceTest {
 
     @Test
     public void testRead() throws Exception {
+        setCurrentUserInContext();
+
         UUID clientId = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientId);
@@ -187,5 +204,24 @@ public class ClientServiceTest {
         client.setPassword(identificationNumber);
         client.setStatus(Status.ACTIVE);
         return client;
+    }
+
+    private void setCurrentUserInContext() {
+        Person person = new Person();
+        person.setIdentificationNumber("0941106445");
+
+        Client client = new Client();
+        client.setPerson(person);
+        client.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_ADMIN.toString())));
+
+        Map<String, Object> sessionMap = new HashMap<>();
+        sessionMap.put(Constants.CURRENT_USER, client);
+
+        PrimaryUser primaryUser = PrimaryUser.build(client, sessionMap);
+
+        when(authentication.getPrincipal()).thenReturn(primaryUser);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
     }
 }

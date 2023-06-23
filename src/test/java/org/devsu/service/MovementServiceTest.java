@@ -1,12 +1,17 @@
 package org.devsu.service;
 
+import org.devsu.common.Constants;
 import org.devsu.common.Exceptions;
+import org.devsu.dto.PrimaryUser;
 import org.devsu.dto.requests.CreateMovementRequestDTO;
 import org.devsu.dto.requests.UpdateMovementRequestDTO;
 import org.devsu.dto.responses.MovementResponseDTO;
 import org.devsu.entity.Account;
+import org.devsu.entity.Client;
 import org.devsu.entity.Movement;
+import org.devsu.entity.Person;
 import org.devsu.enums.MovementType;
+import org.devsu.enums.Role;
 import org.devsu.repository.AccountRepository;
 import org.devsu.repository.MovementRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +20,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
@@ -38,6 +46,12 @@ public class MovementServiceTest {
 
     @Mock
     private MovementRepository movementRepository;
+
+    @Mock
+    private SecurityContext securityContext;
+
+    @Mock
+    private Authentication authentication;
 
     private UUID id;
     private Movement movement;
@@ -68,6 +82,8 @@ public class MovementServiceTest {
 
     @Test
     public void testRead() {
+        setCurrentUserInContext();
+
         when(movementRepository.findById(id)).thenReturn(Optional.of(movement));
 
         MovementResponseDTO result = movementService.read(id);
@@ -108,8 +124,10 @@ public class MovementServiceTest {
 
     @Test
     public void testCreate_InsufficientBalance() throws Exception {
+        setCurrentUserInContext();
+
         createMovementRequestDTO.setMovementType(MovementType.WITHDRAWAL);
-        createMovementRequestDTO.setValue(5000.0);
+        createMovementRequestDTO.setValue(1000.0);
 
         when(accountRepository.findByAccountNumber(any())).thenReturn(Optional.of(account));
 
@@ -213,7 +231,8 @@ public class MovementServiceTest {
 
     @Test
     public void testCreateMovementThrowsExceedsDailyWithdrawalLimitException() throws Exception {
-        // arrange
+        setCurrentUserInContext();
+
         String accountNumber = "123456";
         double withdrawalAmount = 210.0;
         double todayTotal = 800.0;
@@ -230,11 +249,27 @@ public class MovementServiceTest {
         when(movementRepository.findTotalValueByMovementTypeAndAccountNumberForToday(accountNumber, MovementType.WITHDRAWAL))
                 .thenReturn(todayTotal);
 
-        // assert
         assertThrows(Exceptions.ExceedsDailyWithdrawalLimitException.class, () -> {
-            // act
             movementService.create(movementDTO);
         });
     }
 
+    private void setCurrentUserInContext() {
+        Person person = new Person();
+        person.setIdentificationNumber("0941106445");
+
+        Client client = new Client();
+        client.setPerson(person);
+        client.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_ADMIN.toString())));
+
+        Map<String, Object> sessionMap = new HashMap<>();
+        sessionMap.put(Constants.CURRENT_USER, client);
+
+        PrimaryUser primaryUser = PrimaryUser.build(client, sessionMap);
+
+        when(authentication.getPrincipal()).thenReturn(primaryUser);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
+    }
 }

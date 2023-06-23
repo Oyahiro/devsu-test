@@ -1,12 +1,16 @@
 package org.devsu.controller;
 
+import org.devsu.config.jwt.JwtEntryPoint;
+import org.devsu.config.jwt.JwtProvider;
 import org.devsu.dto.responses.AccountResponseDTO;
 import org.devsu.service.AccountService;
+import org.devsu.service.UserDetailService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.given;
@@ -23,7 +27,17 @@ public class AccountControllerIntegrationTest {
     @MockBean
     private AccountService accountService;
 
+    @MockBean
+    private UserDetailService userDetailService;
+
+    @MockBean
+    private JwtEntryPoint jwtEntryPoint;
+
+    @MockBean
+    private JwtProvider jwtProvider;
+
     @Test
+    @WithMockUser(username = "0941106445", roles = {"ADMIN"})
     public void whenGetAccount_thenReturnAccount() throws Exception {
         String accountNumber = "123456789";
         AccountResponseDTO accountResponse = new AccountResponseDTO();

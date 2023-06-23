@@ -10,8 +10,10 @@ import org.devsu.repository.AccountRepository;
 import org.devsu.repository.ClientRepository;
 import org.devsu.repository.MovementRepository;
 import org.devsu.service.interfaces.IReportService;
+import org.devsu.utils.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -37,8 +39,11 @@ public class ReportService implements IReportService {
         this.clientRepository = clientRepository;
     }
 
+    @Override
     public BankStatementsReportDTO getBankStatement(UUID clientId, Date startDate, Date endDate) {
         Client client = findClientById(clientId);
+        SessionUtils.verifyPermissions(client);
+
         List<Account> accounts = accountRepository.findAllByClient(client);
 
         LocalDateTime startDateTime = toLocalDateTimeAtStartOfDay(startDate);

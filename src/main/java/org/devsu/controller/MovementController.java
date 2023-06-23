@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class MovementController {
         this.movementService = movementService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @GetMapping("")
     public ResponseEntity<?> read(@RequestParam UUID movementId) {
         try {
@@ -46,6 +48,7 @@ public class MovementController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CreateMovementRequestDTO movement) {
         try {
@@ -61,6 +64,7 @@ public class MovementController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateMovementRequestDTO movement) {
         try {
@@ -76,6 +80,7 @@ public class MovementController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam UUID movementId) {
         try {

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @GetMapping("")
     public ResponseEntity<?> read(@RequestParam String accountNumber) {
         try {
@@ -45,6 +47,7 @@ public class AccountController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CreateAccountRequestDTO account) {
         try {
@@ -60,6 +63,7 @@ public class AccountController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateAccountRequestDTO account) {
         try {
@@ -75,6 +79,7 @@ public class AccountController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam String accountNumber) {
         try {

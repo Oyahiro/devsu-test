@@ -10,6 +10,7 @@ import org.devsu.enums.Status;
 import org.devsu.repository.AccountRepository;
 import org.devsu.repository.ClientRepository;
 import org.devsu.service.interfaces.IAccountService;
+import org.devsu.utils.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class AccountService implements IAccountService {
     @Override
     public AccountResponseDTO read(String accountId) throws Exception {
         Account account = findAccount(accountId);
+        SessionUtils.verifyPermissions(account.getClient());
+
         return new AccountResponseDTO(account);
     }
 
@@ -103,4 +106,5 @@ public class AccountService implements IAccountService {
         LOG.error(errorMessage);
         return new Exceptions.RecordNotFoundException("Record not found");
     }
+
 }

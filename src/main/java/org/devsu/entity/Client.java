@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,12 +20,17 @@ import java.util.Objects;
 public class Client extends AbstractEntity {
 
     @NotEmpty(message = "Cannot be empty")
-    @Column(name = "password", length = 50)
+    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10)
     private Status status;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "client_id"))
+    @Column(name = "role")
+    private Set<String> roles;
 
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -37,6 +43,13 @@ public class Client extends AbstractEntity {
     public String getName() {
         if (Objects.nonNull(person)) {
             return person.getName();
+        }
+        return "";
+    }
+
+    public String getUsername() {
+        if (Objects.nonNull(person)) {
+            return person.getIdentificationNumber();
         }
         return "";
     }

@@ -11,8 +11,10 @@ import org.devsu.repository.AccountRepository;
 import org.devsu.repository.MovementRepository;
 import org.devsu.service.interfaces.IMovementService;
 import org.devsu.utils.NumberUtils;
+import org.devsu.utils.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,8 @@ public class MovementService implements IMovementService {
             throw new Exceptions.RecordNotFoundException("Record not found");
         }
 
+        SessionUtils.verifyPermissions(optionalMovement.get().getAccount().getClient());
+
         return new MovementResponseDTO(optionalMovement.get());
     }
 
@@ -49,6 +53,8 @@ public class MovementService implements IMovementService {
     @Override
     public MovementResponseDTO create(CreateMovementRequestDTO movement) throws Exception {
         Account account = getAccountByAccountNumber(movement.getAccountNumber());
+        SessionUtils.verifyPermissions(account.getClient());
+
         double currentBalance = getCurrentBalance(account);
         double movementValue = NumberUtils.roundToTwoDecimals(movement.getValue());
         double newBalance = calculateAndValidateNewBalance(account, currentBalance, movementValue, movement.getMovementType());
@@ -103,11 +109,6 @@ public class MovementService implements IMovementService {
             balanceBeforeThisMovement = calculateNewBalance(balanceBeforeThisMovement, m.getValue(), m.getMovementType());
             m.setBalance(balanceBeforeThisMovement);
             movementsToUpdate.add(m);
-
-            if (balanceBeforeThisMovement < 0) {
-                LOG.error(String.format("The balance becomes negative when the movement with id %s is eliminated", movement.getMovementId()));
-                throw new Exceptions.BalanceCalculationException("It is not possible to update the balance sheets");
-            }
         }
 
         movementRepository.saveAll(movementsToUpdate);
@@ -137,11 +138,6 @@ public class MovementService implements IMovementService {
             balanceBeforeThisMovement = calculateNewBalance(balanceBeforeThisMovement, m.getValue(), m.getMovementType());
             m.setBalance(balanceBeforeThisMovement);
             movementsToUpdate.add(m);
-
-            if (balanceBeforeThisMovement < 0) {
-                LOG.error(String.format("The balance becomes negative when the movement with id %s is eliminated", movementId));
-                throw new Exceptions.BalanceCalculationException("It is not possible to update the balance sheets");
-            }
         }
 
         movementRepository.delete(movementToDelete);
@@ -168,7 +164,12 @@ public class MovementService implements IMovementService {
     }
 
     private double calculateNewBalance(double currentBalance, double movementValue, MovementType movementType) {
-        return calculateBalance(currentBalance, movementValue, movementType);
+        double newBalance = calculateBalance(currentBalance, movementValue, movementType);
+        if (newBalance < 0) {
+            LOG.error("The balance becomes negative");
+            throw new Exceptions.BalanceCalculationException("It is not possible to update the balance sheets");
+        }
+        return newBalance;
     }
 
     private double calculateBalance(double currentBalance, double movementValue, MovementType movementType) {

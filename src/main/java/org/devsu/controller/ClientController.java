@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @GetMapping("")
     public ResponseEntity<?> read(@RequestParam UUID clientId) {
         try {
@@ -46,6 +48,7 @@ public class ClientController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody CreateClientRequestDTO client) {
         try {
@@ -61,6 +64,7 @@ public class ClientController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @PatchMapping("")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateClientRequestDTO client) {
         try {
@@ -76,6 +80,7 @@ public class ClientController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam UUID clientId) {
         try {

@@ -6,30 +6,34 @@ import org.devsu.dto.requests.UpdateClientRequestDTO;
 import org.devsu.dto.responses.ClientResponseDTO;
 import org.devsu.entity.Client;
 import org.devsu.entity.Person;
+import org.devsu.enums.Role;
 import org.devsu.enums.Status;
 import org.devsu.repository.ClientRepository;
 import org.devsu.repository.PersonRepository;
 import org.devsu.service.interfaces.IClientService;
+import org.devsu.utils.SessionUtils;
 import org.devsu.utils.ValidationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClientService implements IClientService {
 
     private final Logger LOG = LoggerFactory.getLogger(ClientService.class);
 
+    private final PasswordEncoder passwordEncoder;
     private final PersonRepository personRepository;
     private final ClientRepository clientRepository;
 
-    public ClientService(PersonRepository personRepository, ClientRepository clientRepository) {
+    public ClientService(PasswordEncoder passwordEncoder, PersonRepository personRepository, ClientRepository clientRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.personRepository = personRepository;
         this.clientRepository = clientRepository;
     }
@@ -37,6 +41,8 @@ public class ClientService implements IClientService {
     @Override
     public ClientResponseDTO read(UUID clientId) {
         Client client = findClientById(clientId);
+        SessionUtils.verifyPermissions(client);
+
         return new ClientResponseDTO(client);
     }
 
@@ -57,6 +63,8 @@ public class ClientService implements IClientService {
     public ClientResponseDTO update(UpdateClientRequestDTO client) throws Exception {
         Assert.isTrue(ValidationUtils.validateDocument(client.getIdentificationNumber()), "Identification number is not valid");
         Client clientToUpdate = findClientById(client.getClientId());
+        SessionUtils.verifyPermissions(clientToUpdate);
+
         updateClientAndPersonObjects(clientToUpdate, client);
 
         Client updatedClient = clientRepository.save(clientToUpdate);
@@ -68,6 +76,18 @@ public class ClientService implements IClientService {
     public void delete(UUID clientId) throws Exception {
         Client client = findClientById(clientId);
         clientRepository.delete(client);
+    }
+
+    @Override
+    public Optional<Client> getByIdentificationNumber(String identificationNumber) {
+        Assert.notNull(identificationNumber, "Identification number can't be null");
+        return clientRepository.findByPersonIdentificationNumber(identificationNumber);
+    }
+
+    @Override
+    public boolean existsByIdentificationNumber(String identificationNumber) {
+        Assert.notNull(identificationNumber, "Identification number can't be null");
+        return clientRepository.existsByPersonIdentificationNumber(identificationNumber);
     }
 
     private Client findClientById(UUID clientId) {
@@ -100,9 +120,10 @@ public class ClientService implements IClientService {
 
     private Client buildAndSaveClient(Person person, String password) {
         Client client = new Client();
-        client.setPassword(password);
+        client.setPassword(passwordEncoder.encode(password));
         client.setStatus(Status.ACTIVE);
         client.setPerson(person);
+        client.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_CLIENT.toString())));
 
         return clientRepository.save(client);
     }
@@ -127,7 +148,7 @@ public class ClientService implements IClientService {
     }
 
     private void updateClientDetails(Client clientToUpdate, UpdateClientRequestDTO clientRequest) {
-        clientToUpdate.setPassword(clientRequest.getPassword());
+        clientToUpdate.setPassword(passwordEncoder.encode(clientRequest.getPassword()));
         clientToUpdate.setStatus(clientRequest.getStatus());
     }
 }

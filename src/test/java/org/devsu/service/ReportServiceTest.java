@@ -1,11 +1,15 @@
 package org.devsu.service;
 
+import org.devsu.common.Constants;
 import org.devsu.common.Exceptions;
+import org.devsu.dto.PrimaryUser;
 import org.devsu.dto.reports.BankStatementsReportDTO;
 import org.devsu.entity.Account;
 import org.devsu.entity.Client;
 import org.devsu.entity.Movement;
+import org.devsu.entity.Person;
 import org.devsu.enums.MovementType;
+import org.devsu.enums.Role;
 import org.devsu.repository.AccountRepository;
 import org.devsu.repository.ClientRepository;
 import org.devsu.repository.MovementRepository;
@@ -15,6 +19,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
@@ -37,12 +44,20 @@ public class ReportServiceTest {
     @Mock
     private ClientRepository clientRepository;
 
+    @Mock
+    private SecurityContext securityContext;
+
+    @Mock
+    private Authentication authentication;
+
     @BeforeEach
     public void init() {
     }
 
     @Test
     public void testGetBankStatement() {
+        setCurrentUserInContext();
+
         UUID clientId = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientId);
@@ -77,4 +92,22 @@ public class ReportServiceTest {
         assertThrows(Exceptions.RecordNotFoundException.class, () -> reportService.getBankStatement(clientId, new Date(), new Date()));
     }
 
+    private void setCurrentUserInContext() {
+        Person person = new Person();
+        person.setIdentificationNumber("0941106445");
+
+        Client client = new Client();
+        client.setPerson(person);
+        client.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_ADMIN.toString())));
+
+        Map<String, Object> sessionMap = new HashMap<>();
+        sessionMap.put(Constants.CURRENT_USER, client);
+
+        PrimaryUser primaryUser = PrimaryUser.build(client, sessionMap);
+
+        when(authentication.getPrincipal()).thenReturn(primaryUser);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
+    }
 }
